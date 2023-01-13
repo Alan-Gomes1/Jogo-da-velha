@@ -70,7 +70,14 @@ class TicTacToe:
   
 
 def play(game, x_player, o_player, print_game=True):
-  # Retorna o vencedor do jogo ou empate.
+  if 'RandomComputerPlayer' in str(type(o_player)):
+    player1 = input('Nome do player 1: ')
+    player2 = 'AI'
+    print('Nome do player 2: AI')
+  else:
+    player1 = input('Nome do player 1: ')
+    player2 = input('Nome do player 2: ')
+    
   if print_game:
     game.print_board_nums()
     
@@ -90,7 +97,10 @@ def play(game, x_player, o_player, print_game=True):
         
       if game.current_winner:
         if print_game:
-          print(letter + ' Vencedor!')
+          if letter == 'X': # o primeiro jogador sempre é X
+            print(player1 + ' Vencedor!')
+          else:
+            print(player2 + ' Vencedor!')
         return letter
         
       letter = 'O' if letter == 'X' else 'X' # Trocando jogadores
@@ -99,9 +109,21 @@ def play(game, x_player, o_player, print_game=True):
   if print_game:
     print('Empate!')
 
-      
-if __name__ == '__main__':
-  x_player = HumanPlayer('X')
-  o_player = RandomComputerPlayer('O')
+
+def versus():
+  vs = input('Digite 1 para Player vs Player \nDigite 2 para Player vs AI \n')
+  if vs == '1':
+    x_player = HumanPlayer('X')
+    o_player = HumanPlayer('O')
+  elif vs == '2':
+    x_player = HumanPlayer('X')
+    o_player = RandomComputerPlayer('O')
+  else:
+    print("Valor incorreto, tente novamente")
+    versus() 
+  
   jogo_da_velha = TicTacToe()
   play(jogo_da_velha, x_player, o_player, print_game=True)
+  
+
+versus()
