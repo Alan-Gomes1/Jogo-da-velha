@@ -1,5 +1,5 @@
 import time
-from player import HumanPlayer, RandomComputerPlayer
+from player import HumanPlayer, RandomComputerPlayer, GeniusComputerPlayer
 
 class TicTacToe:
   def __init__(self):
@@ -72,6 +72,10 @@ class TicTacToe:
 def play(game, x_player, o_player, print_game=True):
   if 'RandomComputerPlayer' in str(type(o_player)):
     player1 = input('Nome do player 1: ')
+    player2 = 'Random'
+    print('Nome do player 2: Random')
+  elif 'GeniusComputerPlayer' in str(type(o_player)):
+    player1 = input('Nome do player 1: ')
     player2 = 'AI'
     print('Nome do player 2: AI')
   else:
@@ -111,19 +115,24 @@ def play(game, x_player, o_player, print_game=True):
 
 
 def versus():
-  vs = input('Digite 1 para Player vs Player \nDigite 2 para Player vs AI \n')
-  if vs == '1':
-    x_player = HumanPlayer('X')
-    o_player = HumanPlayer('O')
-  elif vs == '2':
-    x_player = HumanPlayer('X')
-    o_player = RandomComputerPlayer('O')
-  else:
-    print("Valor incorreto, tente novamente")
-    versus() 
-  
-  jogo_da_velha = TicTacToe()
-  play(jogo_da_velha, x_player, o_player, print_game=True)
+  vs = input('Digite 1 para Player vs Player \nDigite 2 para Player vs Maquina aleatoria \nDigite 3 para Player vs AI \n')
+  matches = int(input('Digite a quantidade de partidas: '))
+  for i in range(matches):
+    if vs == '1':
+      x_player = HumanPlayer('X')
+      o_player = HumanPlayer('O')
+    elif vs == '2':
+      x_player = HumanPlayer('X')
+      o_player = RandomComputerPlayer('O')
+    elif vs == '3':
+      x_player = HumanPlayer('X')
+      o_player = GeniusComputerPlayer('O')
+    else:
+      print("Valor incorreto, tente novamente")
+      versus() 
+    
+    jogo_da_velha = TicTacToe()
+    play(jogo_da_velha, x_player, o_player, print_game=True)
   
 
 versus()
