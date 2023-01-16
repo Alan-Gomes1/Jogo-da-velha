@@ -2,7 +2,7 @@ import math
 import random
 
 class Player:
-  def __init__(self, letter): # letter é X ou O
+  def __init__(self, letter):
     self.letter = letter
     
   def get_move(self, game):
@@ -26,7 +26,7 @@ class HumanPlayer(Player):
     valid_square = False
     val = None
     while not valid_square:
-      # Verifica se o valor inserido é válido ou se o campo no tabuleira está disponível, senão retorna inválido
+      # Verifica se o valor inserido é válido ou se o campo no tabuleira está disponível
       square = input(self.letter + ' Insira um movimento de (0-8):')
       try:
         val = int(square)
@@ -60,7 +60,7 @@ class GeniusComputerPlayer(Player):
         else -1 * (state.num_empty_squares()+1)
       }
       
-    elif not state.empty_squares(): # Se não houver quadrados vazios
+    elif not state.empty_squares():
       return {'position': None, 'score': 0}
     
     if player == max_player:

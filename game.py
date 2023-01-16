@@ -7,7 +7,6 @@ class TicTacToe:
     self.current_winner = None
     
   def print_board(self):
-    # Exibindo cada linha dos 3 blocos
     for row in [self.board[i*3:(i+1)*3] for i in range(3)]:
       print('| ' + ' | '.join(row) + ' |')
       
@@ -78,6 +77,9 @@ def play(game, x_player, o_player, print_game=True):
     player1 = input('Nome do player 1: ')
     player2 = 'AI'
     print('Nome do player 2: AI')
+  elif 'RandomComputerPlayer' in str(type(x_player)) or 'GeniusComputerPlayer' in str(type(x_player)):
+    player1 = 'AI'
+    player2 = input('Nome do player 2: ')
   else:
     player1 = input('Nome do player 1: ')
     player2 = input('Nome do player 2: ')
@@ -87,7 +89,6 @@ def play(game, x_player, o_player, print_game=True):
     
   letter = 'X' # Símbolo inicial
   while game.empty_squares():
-    # Verifica se ainda há campos vazios, caso não haja é porque o jogo chegou ao fim.
     if letter == 'O':
       square = o_player.get_move(game)
     else:
@@ -107,7 +108,7 @@ def play(game, x_player, o_player, print_game=True):
             print(player2 + ' Vencedor!')
         return letter
         
-      letter = 'O' if letter == 'X' else 'X' # Trocando jogadores
+      letter = 'O' if letter == 'X' else 'X'
       
     time.sleep(0.8)
   if print_game:
@@ -117,22 +118,26 @@ def play(game, x_player, o_player, print_game=True):
 def versus():
   vs = input('Digite 1 para Player vs Player \nDigite 2 para Player vs Maquina aleatoria \nDigite 3 para Player vs AI \n')
   matches = int(input('Digite a quantidade de partidas: '))
-  for i in range(matches):
-    if vs == '1':
-      x_player = HumanPlayer('X')
-      o_player = HumanPlayer('O')
-    elif vs == '2':
-      x_player = HumanPlayer('X')
-      o_player = RandomComputerPlayer('O')
-    elif vs == '3':
-      x_player = HumanPlayer('X')
-      o_player = GeniusComputerPlayer('O')
-    else:
-      print("Valor incorreto, tente novamente")
-      versus() 
+  
+  if vs == '1':
+    x_player = HumanPlayer('X')
+    o_player = HumanPlayer('O')
+  elif vs == '2':
+    x_player = HumanPlayer('X')
+    o_player = RandomComputerPlayer('O')
+  elif vs == '3':
+    x_player = HumanPlayer('X')
+    o_player = GeniusComputerPlayer('O')
+  else:
+    print("Valor incorreto, tente novamente")
+    versus() 
     
+  for i in range(matches):
     jogo_da_velha = TicTacToe()
-    play(jogo_da_velha, x_player, o_player, print_game=True)
+    if i % 2 == 0:
+      play(jogo_da_velha, x_player, o_player, print_game=True)
+    else:
+      play(jogo_da_velha, o_player, x_player, print_game=True)
   
 
 versus()
